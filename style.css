@@ -5,12 +5,24 @@
   padding: 0;
 }
 
+/* L'Oréal theme colors */
+:root {
+  --loreal-gold: #d4af37; /* classic gold */
+  --loreal-gold-deep: #b8860b; /* deeper gold for accents */
+  --loreal-dark: #0b0b0b; /* deep black */
+  --loreal-ivory: #fcfaf6; /* soft ivory background */
+  --loreal-muted: #7a6f63; /* muted neutral */
+  --loreal-error: #8b0000;
+}
+
 /* —— body + fonts —— */
 body {
-  font-family: "Montserrat", Arial, Helvetica, sans-serif;
-  color: #333;
+  /* Use Royale as primary; fall back to Montserrat and system sans-serifs */
+  font-family: "Royale", "Montserrat", Arial, Helvetica, sans-serif;
+  color: var(--loreal-dark);
   display: flex;
   justify-content: center;
+  background: var(--loreal-ivory);
 }
 
 .page-wrapper {
@@ -26,8 +38,11 @@ body {
 
 .site-title {
   font-size: 22px;
-  font-weight: 500;
+  /* ensure headings use Royale's heavier weight if available */
+  font-weight: 700;
   margin-bottom: 10px;
+  color: var(--loreal-dark);
+  letter-spacing: 0.6px;
 }
 
 /* chat window */
@@ -37,27 +52,85 @@ body {
 
 .chat-window {
   height: 360px;
-  border: 1px solid #000;
+  border: 1px solid rgba(11, 11, 11, 0.12);
   padding: 20px;
   font-size: 18px;
   line-height: 1.5;
   overflow-y: auto;
-  background: #fafafa;
+  background: #fff; /* keep bubbles visible on white */
   white-space: pre-line;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+  scrollbar-gutter: stable;
 }
 
-/* messages */
-.msg {
-  margin-bottom: 14px;
-  line-height: 1.5;
+/* message bubble base */
+.message {
+  display: inline-block;
+  max-width: 78%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 15px;
+  line-height: 1.4;
+  word-wrap: break-word;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
 }
 
-.msg.user {
-  color: #000;
+/* user (right-aligned) bubble */
+.message.user {
+  margin-left: auto;
+  background: linear-gradient(
+    180deg,
+    #fffaf0 0%,
+    rgba(212, 175, 55, 0.12) 100%
+  );
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  color: var(--loreal-dark);
+  border-radius: 16px 16px 6px 16px; /* speech-tail effect */
 }
 
-.msg.ai {
-  color: #666666;
+/* assistant / bot (left-aligned) bubble */
+.message.bot {
+  margin-right: auto;
+  background: var(--loreal-ivory);
+  color: var(--loreal-dark);
+  border: 1px solid rgba(212, 175, 55, 0.08);
+  border-radius: 16px 16px 16px 6px;
+}
+
+/* label (strong) inside bubbles */
+.message strong {
+  display: block;
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: inherit;
+  opacity: 0.9;
+}
+
+/* make assistant label gold */
+.message.bot strong {
+  color: var(--loreal-gold-deep);
+}
+
+/* small helper for system/assistant hints (italic) */
+.message.bot em,
+.message.user em {
+  display: block;
+  font-style: italic;
+  font-size: 13px;
+  opacity: 0.85;
+  margin-top: 4px;
+}
+
+/* improve spacing for error messages */
+.message.bot.error {
+  background: #fff0f0;
+  border-color: rgba(139, 0, 0, 0.12);
+  color: var(--loreal-error);
 }
 
 /* input row */
@@ -65,6 +138,7 @@ body {
   display: flex;
   gap: 12px;
   margin-top: 16px;
+  align-items: center;
 }
 
 .chat-form input {
@@ -81,7 +155,7 @@ body {
 
 .chat-form button {
   font-size: 18px;
-  background: #000;
+  background: var(--loreal-dark);
   color: #fff;
   border: none;
   padding: 12px;
@@ -91,7 +165,8 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.06s;
+  border-radius: 8px;
 }
 
 .chat-form button .material-icons {
@@ -99,7 +174,9 @@ body {
 }
 
 .chat-form button:hover {
-  background: #666666;
+  background: var(--loreal-gold);
+  color: var(--loreal-dark);
+  transform: translateY(-1px);
 }
 
 .chat-form button:focus {
@@ -134,10 +211,33 @@ body {
 
 .site-footer a {
   margin: 0 8px;
-  color: #000;
+  color: var(--loreal-gold-deep);
   text-decoration: none;
 }
 
 .site-footer a:hover {
-  color: #666666;
+  color: var(--loreal-dark);
+}
+
+/* Latest question header + bubble (appears above chat window) */
+.latest-question {
+  margin-bottom: 12px;
+  text-align: left;
+}
+.latest-question .latest-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 6px;
+}
+.latest-question .latest-text {
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  color: var(--loreal-dark);
+  padding: 10px 12px;
+  border-radius: 12px;
+  max-width: 78%;
+  font-size: 15px;
+  line-height: 1.4;
+  word-wrap: break-word;
 }

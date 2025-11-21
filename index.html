@@ -12,19 +12,49 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap"
       rel="stylesheet"
     />
+    <!-- Load Royale font (replace URL if you host the font locally or use another provider) -->
+    <link href="https://fonts.cdnfonts.com/css/royale" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Logo: centered above the advisor title */
+      .logo-container {
+        text-align: center;
+        margin: 18px 0 8px;
+      }
+      .logo-container img {
+        max-width: 280px;
+        width: 60%;
+        height: auto;
+        display: inline-block;
+      }
+    </style>
   </head>
 
   <body>
     <div class="page-wrapper">
       <!------- Header / Branding ------->
       <header class="site-header">
+        <div class="logo-container">
+          <img
+            src="img/loreal-logo.png"
+            alt="L'Oréal logo"
+            onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 150%22><rect width=%22600%22 height=%22150%22 fill=%22%23ffffff%22/><text x=%22300%22 y=%2275%22 font-size=%2236%22 font-family=%22Arial%22 fill=%22%23000000%22 text-anchor=%22middle%22>L&#39;ORÉAL</text></svg>'"
+          />
+        </div>
         <h1 class="site-title">Smart Product Advisor</h1>
       </header>
 
       <!------- Chat Area ------->
       <main>
         <section class="chatbox">
+          <!-- Latest user question shown above the chat response; resets on each submit -->
+          <div
+            id="latestQuestion"
+            class="latest-question"
+            aria-live="polite"
+            aria-atomic="true"
+            hidden
+          ></div>
           <div id="chatWindow" class="chat-window">
             <!-- messages will be appended here via JS -->
           </div>
